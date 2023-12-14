@@ -1,4 +1,4 @@
-package com.smilegate.digerapigateway.auth;
+package com.smilegate.digeruserservice.auth.jwt;
 
 public record JwtPair(
         String accessToken,

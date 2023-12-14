@@ -1,4 +1,4 @@
-package com.smilegate.digeruserservice.domain;
+package com.smilegate.digeruserservice.domain.persistence;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -12,10 +12,6 @@ import java.time.LocalDateTime;
 @Getter
 @MappedSuperclass
 public abstract class BaseEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     private LocalDateTime deletedAt;
 

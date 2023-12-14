@@ -1,4 +1,4 @@
-package com.smilegate.digerapigateway.auth;
+package com.smilegate.digerapigateway.auth.core;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
@@ -18,9 +18,9 @@ public class JwtVerifier {
                     .setSigningKey(jwtProperties.getSigningKey()).build()
                     .parseClaimsJws(token);
         } catch (MalformedJwtException | IllegalArgumentException ex) {
-            throw new IllegalArgumentException("Token is broken");
+            throw new IllegalArgumentException("토큰이 잘못되었습니다.");
         } catch (ExpiredJwtException exception) {
-            throw new IllegalStateException("Token is expired");
+            throw new IllegalStateException("토큰이 만료되었습니다.");
         }
     }
 }

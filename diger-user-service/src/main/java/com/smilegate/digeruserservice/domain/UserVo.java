@@ -1,14 +1,14 @@
-package com.smilegate.digeruserservice.domain.user;
+package com.smilegate.digeruserservice.domain;
 
+import com.smilegate.digeruserservice.domain.persistence.Role;
+import com.smilegate.digeruserservice.domain.persistence.UserEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@RequiredArgsConstructor
 public class UserVo {
     private Long id;
     private String loginId;
@@ -25,6 +25,7 @@ public class UserVo {
 
     public UserEntity fromVo() {
         return new UserEntity(
+                id,
                 loginId,
                 password,
                 nickname,

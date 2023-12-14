@@ -1,6 +1,6 @@
-package com.smilegate.digerapigateway.auth;
+package com.smilegate.digeruserservice.auth;
 
-import com.smilegate.digerapigateway.auth.core.JwtPair;
+import com.smilegate.digeruserservice.auth.jwt.JwtPair;
 
 public interface JwtAgent {
 

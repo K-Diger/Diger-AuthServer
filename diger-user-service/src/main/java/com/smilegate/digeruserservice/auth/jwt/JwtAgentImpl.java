@@ -1,5 +1,6 @@
-package com.smilegate.digerapigateway.auth;
+package com.smilegate.digeruserservice.auth.jwt;
 
+import com.smilegate.digeruserservice.auth.JwtAgent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -12,8 +13,8 @@ public class JwtAgentImpl implements JwtAgent {
     private final JwtParser jwtParser;
 
     @Override
-    public JwtPair provide() {
-        return jwtGenerator.execute(1L, "");
+    public JwtPair provide(String loginId) {
+        return jwtGenerator.execute(1L);
     }
 
     @Override

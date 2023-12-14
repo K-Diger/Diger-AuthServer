@@ -1,9 +1,7 @@
 package com.smilegate.digerpostservice.domain.post;
 
 import com.smilegate.digerpostservice.domain.BaseEntity;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -20,4 +18,7 @@ public class PostEntity extends BaseEntity {
 
     @Column(name = "content", nullable = false)
     private String content;
+
+    @Enumerated(value = EnumType.STRING)
+    private PostType postType;
 }

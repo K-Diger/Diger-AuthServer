@@ -1,4 +1,4 @@
-package com.smilegate.digerapigateway.auth;
+package com.smilegate.digerapigateway.auth.core;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -15,15 +15,15 @@ public class JwtGenerator {
     private static final Long ACCESS_TOKEN_EXPIRE_TIME = 30 * 60 * 1000L;
     private static final Long REFRESH_TOKEN_EXPIRE_TIME = 270 * 24 * 60 * 60 * 1000L;
 
-    public JwtPair execute(Long userId, String nickname) {
-        return new JwtPair(buildAccessToken(userId, nickname), buildRefreshToken());
+    public JwtPair execute(Long userId) {
+        return new JwtPair(buildAccessToken(userId), buildRefreshToken());
     }
 
-    private String buildAccessToken(Long userId, String nickname) {
+    private String buildAccessToken(Long userId) {
         return Jwts.builder()
                 .signWith(jwtProperties.getSigningKey())
                 .setHeaderParam("type", "JWT")
-                .setClaims(buildClaims(userId, nickname))
+                .setClaims(buildClaims(userId))
                 .setExpiration(buildExpiredAt(ACCESS_TOKEN_EXPIRE_TIME))
                 .compact();
     }
@@ -36,11 +36,10 @@ public class JwtGenerator {
                 .compact();
     }
 
-    private Claims buildClaims(Long userId, String nickname) {
+    private Claims buildClaims(Long userId) {
         Claims claims = Jwts.claims();
         claims.setSubject("jwt");
         claims.put("id", userId);
-        claims.put("nickname", nickname);
         return claims;
     }
 

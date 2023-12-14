@@ -1,6 +1,6 @@
-package com.smilegate.digeruserservice.domain.user;
+package com.smilegate.digeruserservice.domain.persistence;
 
-import com.smilegate.digeruserservice.domain.BaseEntity;
+import com.smilegate.digeruserservice.domain.UserVo;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -13,6 +13,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class UserEntity extends BaseEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @Column(name = "login_id", length = 20, nullable = false)
     private String loginId;
 
@@ -24,5 +28,9 @@ public class UserEntity extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    public UserVo toDto() {
+        return new UserVo(id, loginId, password, nickname, role);
+    }
 }
 

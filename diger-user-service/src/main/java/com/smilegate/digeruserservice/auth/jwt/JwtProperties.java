@@ -1,4 +1,4 @@
-package com.smilegate.digerapigateway.auth;
+package com.smilegate.digeruserservice.auth.jwt;
 
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
@@ -10,7 +10,7 @@ import java.security.Key;
 @Component
 public class JwtProperties {
 
-    @Value("${spring.secret-key}")
+    @Value("${jwt.secret-key}")
     private String key;
 
     Key getSigningKey() {
