@@ -1,9 +1,9 @@
 server:
-  port: 8081
+  port: 8080
 
 spring:
   application:
-    name: user-service
+    name: auth-service
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/smilegatedevcamp?Unicode=true&characterEncoding=utf8
