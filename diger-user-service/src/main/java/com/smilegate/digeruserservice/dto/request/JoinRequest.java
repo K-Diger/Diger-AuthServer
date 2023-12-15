@@ -1,4 +1,4 @@
-package com.smilegate.digeruserservice.controller.dto.request;
+package com.smilegate.digeruserservice.dto.request;
 
 public record JoinRequest(
         String loginId,

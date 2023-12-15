@@ -2,8 +2,8 @@ package com.smilegate.digeruserservice.domain.service;
 
 import com.smilegate.digeruserservice.auth.JwtAgent;
 import com.smilegate.digeruserservice.common.PasswordEncryptor;
-import com.smilegate.digeruserservice.controller.dto.response.UserResponse;
-import com.smilegate.digeruserservice.controller.dto.response.UserTokenResponse;
+import com.smilegate.digeruserservice.dto.response.UserResponse;
+import com.smilegate.digeruserservice.dto.response.UserTokenResponse;
 import com.smilegate.digeruserservice.domain.UserVo;
 import com.smilegate.digeruserservice.domain.persistence.Role;
 import com.smilegate.digeruserservice.domain.persistence.UserEntity;

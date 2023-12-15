@@ -1,4 +1,4 @@
-package com.smilegate.digerpostservice.domain;
+package com.smilegate.digerpostservice.domain.persistence;
 
 import jakarta.persistence.*;
 import lombok.Getter;

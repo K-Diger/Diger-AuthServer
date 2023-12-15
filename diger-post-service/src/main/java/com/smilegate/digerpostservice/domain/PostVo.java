@@ -1,10 +1,9 @@
-package com.smilegate.digerpostservice.domain.post;
+package com.smilegate.digerpostservice.domain;
 
-import com.smilegate.digerpostservice.domain.BaseEntity;
+import com.smilegate.digerpostservice.domain.persistence.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 

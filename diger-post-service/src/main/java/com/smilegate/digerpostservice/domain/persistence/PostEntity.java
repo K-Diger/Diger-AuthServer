@@ -1,6 +1,5 @@
-package com.smilegate.digerpostservice.domain.post;
+package com.smilegate.digerpostservice.domain.persistence;
 
-import com.smilegate.digerpostservice.domain.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;

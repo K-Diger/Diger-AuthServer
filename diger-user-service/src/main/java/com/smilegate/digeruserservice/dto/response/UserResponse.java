@@ -1,4 +1,4 @@
-package com.smilegate.digeruserservice.controller.dto.response;
+package com.smilegate.digeruserservice.dto.response;
 
 public record UserResponse(
         Long id,
