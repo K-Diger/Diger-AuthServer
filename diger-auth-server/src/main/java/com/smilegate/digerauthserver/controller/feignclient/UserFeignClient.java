@@ -9,7 +9,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-@FeignClient(name = "user-service")
+@FeignClient(name = "USER-SERVICE", url = "http://localhost:8081")
 public interface UserFeignClient {
 
     @PostMapping("/v1/join")

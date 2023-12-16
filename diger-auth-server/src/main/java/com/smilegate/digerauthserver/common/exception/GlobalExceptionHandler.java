@@ -1,7 +1,6 @@
 package com.smilegate.digerauthserver.common.exception;
 
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.TypeMismatchException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -20,7 +19,6 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = {
             MethodArgumentNotValidException.class,
             MethodArgumentTypeMismatchException.class,
-            TypeMismatchException.class,
             MissingServletRequestParameterException.class
     })
     public ResponseEntity<ExceptionResponse> handleRequestValidationException(Exception e) {

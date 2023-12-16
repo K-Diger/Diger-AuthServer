@@ -1,6 +1,6 @@
 package com.smilegate.digeruserservice.controller.usecase;
 
-import com.smilegate.digeruserservice.auth.JwtAgent;
+import com.smilegate.digeruserservice.common.jwt.JwtAgent;
 import com.smilegate.digeruserservice.controller.dto.response.UserTokenResponse;
 import com.smilegate.digeruserservice.domain.UserVo;
 import com.smilegate.digeruserservice.domain.service.UserService;

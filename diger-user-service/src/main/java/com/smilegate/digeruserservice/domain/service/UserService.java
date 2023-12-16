@@ -31,13 +31,13 @@ public class UserService {
                         nickname,
                         Role.USER
                 ).fromVo()
-        ).toDto();
+        ).toVo();
     }
 
     public UserVo loadById(Long id) {
         Optional<UserEntity> userEntity = userRepository.findById(id);
         if (userEntity.isEmpty()) throw new UserServerException(ExceptionType.E404);
-        return userEntity.get().toDto();
+        return userEntity.get().toVo();
     }
 
     public UserVo loadByLoginIdAndPassword(
@@ -45,10 +45,10 @@ public class UserService {
             String password
     ) {
         Optional<UserEntity> userEntity = userRepository.findByLoginId(loginId);
-        if (userEntity.isEmpty() || incorrectPassword(password, userEntity.get().toDto())) {
+        if (userEntity.isEmpty() || incorrectPassword(password, userEntity.get().toVo())) {
             throw new UserServerException(ExceptionType.E400_AUTHENTICATE);
         }
-        return userEntity.get().toDto();
+        return userEntity.get().toVo();
     }
 
     public boolean incorrectPassword(String password, UserVo userVo) {
@@ -73,7 +73,7 @@ public class UserService {
     public UserVo loadByLoginId(String loginId) {
         Optional<UserEntity> userEntity = userRepository.findByLoginId(loginId);
         if (userEntity.isPresent()) {
-            return userEntity.get().toDto();
+            return userEntity.get().toVo();
         }
         throw new UserServerException(ExceptionType.E404);
     }

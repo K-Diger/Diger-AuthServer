@@ -6,7 +6,6 @@ import com.smilegate.digerauthserver.controller.dto.request.LoginRequest;
 import com.smilegate.digerauthserver.controller.dto.response.AuthenticationResponse;
 import com.smilegate.digerauthserver.controller.dto.response.UserResponse;
 import com.smilegate.digerauthserver.controller.feignclient.UserFeignClient;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/auth-service/v1")
+@RequestMapping("/v1")
 @RequiredArgsConstructor
 public class AuthController {
 
@@ -27,7 +26,9 @@ public class AuthController {
     public ResponseEntity<UserResponse> join(
             @RequestBody JoinRequest joinRequest
     ) {
-        return ResponseEntity.ok().body(userFeignClient.join(joinRequest));
+        return ResponseEntity
+                .ok()
+                .body(userFeignClient.join(joinRequest));
     }
 
     @PostMapping("/login")
@@ -37,15 +38,15 @@ public class AuthController {
     ) {
         AuthenticationResponse authenticationResponse = userFeignClient.login(loginRequest);
 
-        Cookie accessToken = cookieAgent.createCookie(
-                "accessToken", authenticationResponse.accessToken()
+        httpServletResponse.addCookie(
+                cookieAgent.createAccessToken(authenticationResponse.accessToken())
         );
-        Cookie refreshToken = cookieAgent.createCookie(
-                "accessToken", authenticationResponse.accessToken()
+        httpServletResponse.addCookie(
+                cookieAgent.createRefreshToken(authenticationResponse.refreshToken())
         );
-        httpServletResponse.addCookie(accessToken);
-        httpServletResponse.addCookie(refreshToken);
 
-        return ResponseEntity.ok(null);
+        return ResponseEntity
+                .ok()
+                .body(null);
     }
 }

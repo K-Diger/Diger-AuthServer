@@ -29,7 +29,7 @@ public class UserEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    public UserVo toDto() {
+    public UserVo toVo() {
         return new UserVo(id, loginId, password, nickname, role);
     }
 }

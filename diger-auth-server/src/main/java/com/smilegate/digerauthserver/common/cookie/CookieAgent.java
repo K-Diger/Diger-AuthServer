@@ -11,7 +11,15 @@ public class CookieAgent {
 
     private static final int COOKIE_VALIDITY = 60 * 60; // 1hours
 
-    public Cookie createCookie(String name, String value) {
+    public Cookie createAccessToken(String value) {
+        return createCookie("accessToken", value);
+    }
+
+    public Cookie createRefreshToken(String value) {
+        return createCookie("refreshToken", value);
+    }
+
+    private Cookie createCookie(String name, String value) {
         Cookie cookie = new Cookie(name, value);
         cookie.setMaxAge(COOKIE_VALIDITY);
         cookie.setHttpOnly(true);

@@ -21,21 +21,24 @@ spring:
     gateway:
       routes:
         - id: auth-service
-          uri: lb://AUTH-SERVICE
+          #uri: lb://AUTH-SERVICE
+          uri: http://localhost:8080
           predicates:
             - Path=/auth-service/**
           filters:
             - RewritePath=/auth-service/?(?<segment>.*), /$\{segment}
 
         - id: user-service
-          uri: lb://USER-SERVICE
+          #uri: lb://USER-SERVICE
+          uri: http://localhost:8081
           predicates:
             - Path=/user-service/**
           filters:
             - RewritePath=/user-service/?(?<segment>.*), /$\{segment}
 
         - id: post-service
-          uri: lb://POST-SERVICE
+          #uri: lb://POST-SERVICE
+          uri: http://localhost:8082
           predicates:
             - Path=/post-service/**
           filters:

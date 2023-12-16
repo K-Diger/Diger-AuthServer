@@ -1,4 +1,4 @@
-package com.smilegate.digeruserservice.auth.jwt;
+package com.smilegate.digeruserservice.common.jwt.component;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;

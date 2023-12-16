@@ -1,6 +1,6 @@
-package com.smilegate.digeruserservice.auth.jwt;
+package com.smilegate.digeruserservice.common.jwt.component;
 
-import com.smilegate.digeruserservice.auth.JwtAgent;
+import com.smilegate.digeruserservice.common.jwt.JwtAgent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
