@@ -3,8 +3,8 @@ package com.smilegate.digerauthserver.controller;
 import com.smilegate.digerauthserver.common.cookie.CookieAgent;
 import com.smilegate.digerauthserver.controller.dto.request.JoinRequest;
 import com.smilegate.digerauthserver.controller.dto.request.LoginRequest;
-import com.smilegate.digerauthserver.controller.dto.response.AuthenticationResponse;
 import com.smilegate.digerauthserver.controller.dto.response.UserResponse;
+import com.smilegate.digerauthserver.controller.dto.response.UserTokenResponse;
 import com.smilegate.digerauthserver.controller.feignclient.UserFeignClient;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -36,13 +36,13 @@ public class AuthController {
             @RequestBody LoginRequest loginRequest,
             HttpServletResponse httpServletResponse
     ) {
-        AuthenticationResponse authenticationResponse = userFeignClient.login(loginRequest);
+        UserTokenResponse userTokenResponse = userFeignClient.login(loginRequest);
 
         httpServletResponse.addCookie(
-                cookieAgent.createAccessToken(authenticationResponse.accessToken())
+                cookieAgent.createAccessToken(userTokenResponse.jwtPair().accessToken())
         );
         httpServletResponse.addCookie(
-                cookieAgent.createRefreshToken(authenticationResponse.refreshToken())
+                cookieAgent.createRefreshToken(userTokenResponse.jwtPair().refreshToken())
         );
 
         return ResponseEntity

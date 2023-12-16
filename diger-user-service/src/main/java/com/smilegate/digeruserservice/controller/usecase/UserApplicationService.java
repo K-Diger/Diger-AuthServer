@@ -1,10 +1,10 @@
 package com.smilegate.digeruserservice.controller.usecase;
 
 import com.smilegate.digeruserservice.common.jwt.JwtAgent;
+import com.smilegate.digeruserservice.controller.dto.response.UserResponse;
 import com.smilegate.digeruserservice.controller.dto.response.UserTokenResponse;
 import com.smilegate.digeruserservice.domain.UserVo;
 import com.smilegate.digeruserservice.domain.service.UserService;
-import com.smilegate.digeruserservice.dto.response.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

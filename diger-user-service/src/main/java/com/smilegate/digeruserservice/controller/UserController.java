@@ -2,9 +2,9 @@ package com.smilegate.digeruserservice.controller;
 
 import com.smilegate.digeruserservice.controller.dto.request.JoinRequest;
 import com.smilegate.digeruserservice.controller.dto.request.LoginRequest;
+import com.smilegate.digeruserservice.controller.dto.response.UserResponse;
 import com.smilegate.digeruserservice.controller.dto.response.UserTokenResponse;
 import com.smilegate.digeruserservice.controller.usecase.UserApplicationService;
-import com.smilegate.digeruserservice.dto.response.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

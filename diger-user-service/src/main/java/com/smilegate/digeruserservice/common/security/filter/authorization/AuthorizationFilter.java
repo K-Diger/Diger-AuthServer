@@ -1,4 +1,4 @@
-package com.smilegate.digeruserservice.common.security.filter;
+package com.smilegate.digeruserservice.common.security.filter.authorization;
 
 import com.smilegate.digeruserservice.common.exception.ExceptionType;
 import com.smilegate.digeruserservice.common.exception.UserServerException;
@@ -44,12 +44,13 @@ public class AuthorizationFilter extends OncePerRequestFilter {
             FilterChain filterChain
     ) throws ServletException, IOException {
         if (isByPassURI(request.getRequestURI())) filterChain.doFilter(request, response);
+        else {
+            UserVo userVo = loadUserEntityByRequest(request).toVo();
+            Authentication authentication = getAuthentication(userVo.getLoginId());
+            validateAuthenticationBySecurityHolder(authentication);
 
-        UserVo userVo = loadUserEntityByRequest(request).toVo();
-        Authentication authentication = getAuthentication(userVo.getLoginId());
-        validateAuthenticationBySecurityHolder(authentication);
-
-        filterChain.doFilter(request, response);
+            filterChain.doFilter(request, response);
+        }
     }
 
     private void validateAuthenticationBySecurityHolder(Authentication authentication) {

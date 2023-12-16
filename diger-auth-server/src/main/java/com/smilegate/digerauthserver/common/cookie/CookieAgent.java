@@ -14,7 +14,6 @@ public class CookieAgent {
     public Cookie createAccessToken(String value) {
         return createCookie("accessToken", value);
     }
-
     public Cookie createRefreshToken(String value) {
         return createCookie("refreshToken", value);
     }

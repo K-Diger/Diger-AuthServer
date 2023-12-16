@@ -1,7 +1,7 @@
 package com.smilegate.digeruserservice.common.security;
 
 import com.smilegate.digeruserservice.common.jwt.JwtAgent;
-import com.smilegate.digeruserservice.common.security.filter.AuthorizationFilter;
+import com.smilegate.digeruserservice.common.security.filter.authorization.AuthorizationFilter;
 import com.smilegate.digeruserservice.common.security.filter.authentication.AuthenticationFilter;
 import com.smilegate.digeruserservice.domain.persistence.UserRepository;
 import lombok.RequiredArgsConstructor;

@@ -2,7 +2,7 @@ package com.smilegate.digerauthserver.controller.feignclient;
 
 import com.smilegate.digerauthserver.controller.dto.request.JoinRequest;
 import com.smilegate.digerauthserver.controller.dto.request.LoginRequest;
-import com.smilegate.digerauthserver.controller.dto.response.AuthenticationResponse;
+import com.smilegate.digerauthserver.controller.dto.response.UserTokenResponse;
 import com.smilegate.digerauthserver.controller.dto.response.UserResponse;
 import jakarta.validation.Valid;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -16,5 +16,5 @@ public interface UserFeignClient {
     UserResponse join(@RequestBody @Valid JoinRequest joinRequest);
 
     @PostMapping("/v1/login")
-    AuthenticationResponse login(@RequestBody @Valid LoginRequest loginRequest);
+    UserTokenResponse login(@RequestBody @Valid LoginRequest loginRequest);
 }
