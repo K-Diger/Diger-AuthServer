@@ -1,4 +1,4 @@
-package com.smilegate.digerauthserver.common.exception;
+package com.smilegate.digerpostservice.common.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,11 +24,6 @@ public enum ExceptionType {
     E401(
             "E401-1",
             "해당 요청은 인가가 필요합니다.",
-            HttpStatus.UNAUTHORIZED
-    ),
-    E401_TOKEN_EXPIRED(
-            "E401-2",
-            "해당 토큰은 만료되었습니다.",
             HttpStatus.UNAUTHORIZED
     ),
 

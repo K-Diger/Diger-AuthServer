@@ -1,6 +1,21 @@
-# Diger-AuthServer
-Smilegate Devcamp Personal Project
-
-# Architecture Draft
+## Architecture Draft (Ver. 23/12/18)
 
 ![](architecture.png)
+
+### 마일스톤 1
+
+#### API Gateway사용
+
+- 유저는 회원가입을 할 수 있다.
+  - 유저는 로그인을 할 수 있다.
+
+- 유저는 게시글을 작성할 수 있다.
+  - 유저는 공지사항을 작성할 수 없다.
+
+- 관리자는 공지사항을 작성할 수 있다.
+
+### 마일스톤 2
+
+- 마이크로서버와 통신방식을 마일스톤 1의 OpenFeign에서 gRPC로 변경하기
+
+- API Gateway에서 직접적으로 서버 주소를 사용하는 것이 아닌 로드밸런싱을 사용하기 

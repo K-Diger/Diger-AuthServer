@@ -1,6 +1,7 @@
-package com.smilegate.digerauthserver.common.exception;
+package com.smilegate.digerpostservice.common.exception;
 
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.TypeMismatchException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -9,7 +10,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
-import static com.smilegate.digerauthserver.common.exception.ExceptionType.E400;
+import static com.smilegate.digeruserservice.common.exception.ExceptionType.E400;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 @Slf4j
@@ -19,6 +20,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = {
             MethodArgumentNotValidException.class,
             MethodArgumentTypeMismatchException.class,
+            TypeMismatchException.class,
             MissingServletRequestParameterException.class
     })
     public ResponseEntity<ExceptionResponse> handleRequestValidationException(Exception e) {
@@ -36,8 +38,8 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(exceptionResponse, exception.getStatus());
     }
 
-    @ExceptionHandler(value = {AuthServerException.class})
-    public ResponseEntity<ExceptionResponse> handleBaseException(AuthServerException e) {
+    @ExceptionHandler(value = {UserServerException.class})
+    public ResponseEntity<ExceptionResponse> handleBaseException(UserServerException e) {
         String className = e.getClass().getName();
         ExceptionType exceptionType = e.getExceptionType();
         ExceptionResponse exceptionResponse = ExceptionResponse.builder()

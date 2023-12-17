@@ -1,26 +1,31 @@
 package com.smilegate.digerauthserver.controller;
 
 import com.smilegate.digerauthserver.common.cookie.CookieAgent;
+import com.smilegate.digerauthserver.common.jwt.component.JwtPair;
 import com.smilegate.digerauthserver.controller.dto.request.JoinRequest;
 import com.smilegate.digerauthserver.controller.dto.request.LoginRequest;
 import com.smilegate.digerauthserver.controller.dto.response.UserResponse;
-import com.smilegate.digerauthserver.controller.dto.response.UserTokenResponse;
-import com.smilegate.digerauthserver.controller.feignclient.UserFeignClient;
+import com.smilegate.digerauthserver.controller.usecase.AuthApplicationService;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/v1")
 @RequiredArgsConstructor
 public class AuthController {
-
-    private final UserFeignClient userFeignClient;
     private final CookieAgent cookieAgent;
+    private final AuthApplicationService authApplicationService;
+
+    @PostMapping("/auth")
+    public ResponseEntity<Long> auth(
+            @RequestHeader("Authorization") String token
+    ) {
+        return ResponseEntity
+                .ok()
+                .body(authApplicationService.authToken(token));
+    }
 
     @PostMapping("/join")
     public ResponseEntity<UserResponse> join(
@@ -28,7 +33,7 @@ public class AuthController {
     ) {
         return ResponseEntity
                 .ok()
-                .body(userFeignClient.join(joinRequest));
+                .body(authApplicationService.join(joinRequest));
     }
 
     @PostMapping("/login")
@@ -36,13 +41,13 @@ public class AuthController {
             @RequestBody LoginRequest loginRequest,
             HttpServletResponse httpServletResponse
     ) {
-        UserTokenResponse userTokenResponse = userFeignClient.login(loginRequest);
+        JwtPair jwtPair = authApplicationService.login(loginRequest);
 
         httpServletResponse.addCookie(
-                cookieAgent.createAccessToken(userTokenResponse.jwtPair().accessToken())
+                cookieAgent.createAccessToken(jwtPair.accessToken())
         );
         httpServletResponse.addCookie(
-                cookieAgent.createRefreshToken(userTokenResponse.jwtPair().refreshToken())
+                cookieAgent.createRefreshToken(jwtPair.refreshToken())
         );
 
         return ResponseEntity

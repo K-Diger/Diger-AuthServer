@@ -3,7 +3,6 @@ package com.smilegate.digeruserservice.controller;
 import com.smilegate.digeruserservice.controller.dto.request.JoinRequest;
 import com.smilegate.digeruserservice.controller.dto.request.LoginRequest;
 import com.smilegate.digeruserservice.controller.dto.response.UserResponse;
-import com.smilegate.digeruserservice.controller.dto.response.UserTokenResponse;
 import com.smilegate.digeruserservice.controller.usecase.UserApplicationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -41,7 +40,7 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<UserTokenResponse> login(
+    public ResponseEntity<UserResponse> login(
             @RequestBody LoginRequest loginRequest
     ) {
         return ResponseEntity.ok().body(

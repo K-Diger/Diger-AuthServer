@@ -1,8 +1,6 @@
 package com.smilegate.digeruserservice.controller.usecase;
 
-import com.smilegate.digeruserservice.common.jwt.JwtAgent;
 import com.smilegate.digeruserservice.controller.dto.response.UserResponse;
-import com.smilegate.digeruserservice.controller.dto.response.UserTokenResponse;
 import com.smilegate.digeruserservice.domain.UserVo;
 import com.smilegate.digeruserservice.domain.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserApplicationService {
 
     private final UserService userService;
-    private final JwtAgent jwtAgent;
 
     @Transactional
     public UserResponse create(
@@ -36,13 +33,16 @@ public class UserApplicationService {
     }
 
     @Transactional
-    public UserTokenResponse login(
+    public UserResponse login(
             String loginId,
             String password
     ) {
         UserVo userVo = userService.loadByLoginIdAndPassword(loginId, password);
-        return new UserTokenResponse(
-                jwtAgent.provide(userVo.getId(), userVo.getLoginId())
+        return new UserResponse(
+                userVo.getId(),
+                userVo.getLoginId(),
+                userVo.getNickname(),
+                userVo.getRole().name()
         );
     }
 

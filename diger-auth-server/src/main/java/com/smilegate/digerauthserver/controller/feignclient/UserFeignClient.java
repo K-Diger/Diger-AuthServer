@@ -16,5 +16,5 @@ public interface UserFeignClient {
     UserResponse join(@RequestBody @Valid JoinRequest joinRequest);
 
     @PostMapping("/v1/login")
-    UserTokenResponse login(@RequestBody @Valid LoginRequest loginRequest);
+    UserResponse login(@RequestBody @Valid LoginRequest loginRequest);
 }
