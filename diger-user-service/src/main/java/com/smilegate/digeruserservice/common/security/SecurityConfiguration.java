@@ -1,6 +1,6 @@
 package com.smilegate.digeruserservice.common.security;
 
-import com.smilegate.digeruserservice.common.jwt.JwtAgent;
+import com.smilegate.digeruserservice.common.security.filter.JwtSuperAgent;
 import com.smilegate.digeruserservice.common.security.filter.authentication.AuthenticationFilter;
 import com.smilegate.digeruserservice.common.security.filter.authorization.AuthorizationFilter;
 import com.smilegate.digeruserservice.domain.persistence.UserRepository;
@@ -23,7 +23,7 @@ public class SecurityConfiguration {
 
     private final UserDetailsService userDetailsService;
     private final UserRepository userRepository;
-    private final JwtAgent jwtAgent;
+    private final JwtSuperAgent jwtSuperAgent;
 
     private static final String[] NOT_NEED_AUTHORIZED = {
             "/v1/join",
@@ -48,20 +48,18 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests((authorize) ->
                         authorize.anyRequest().hasAuthority("ROLE_USER")
                 )
-                // 토큰이 있나?
+                // 요청 내 토큰이 있는지 검증
                 .addFilterBefore(
                         new AuthenticationFilter(
                                 userDetailsService,
-                                userRepository,
-                                jwtAgent
+                                jwtSuperAgent
                         ),
                         UsernamePasswordAuthenticationFilter.class
                 )
                 // 토큰을 통해 조회한 ROLE이 적합한가?
                 .addFilterAfter(
                         new AuthorizationFilter(
-                                userRepository,
-                                jwtAgent,
+                                jwtSuperAgent,
                                 userDetailsService
                         ),
                         AuthenticationFilter.class
