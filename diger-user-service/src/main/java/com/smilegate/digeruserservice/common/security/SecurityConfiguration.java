@@ -16,14 +16,14 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import static org.springframework.security.config.Customizer.withDefaults;
 
-@RequiredArgsConstructor
 @Configuration
+@RequiredArgsConstructor
 public class SecurityConfiguration {
 
     private final UserDetailsService userDetailsService;
     private final JwtSuperAgent jwtSuperAgent;
 
-    private static final String[] NOT_NEED_AUTHORIZED = {
+    private static final String[] WHITE_LIST_URI = {
             "/v1/join",
             "/v1/login",
     };
@@ -41,7 +41,7 @@ public class SecurityConfiguration {
 
         http
                 .authorizeHttpRequests((authorize) ->
-                        authorize.requestMatchers(NOT_NEED_AUTHORIZED).permitAll()
+                        authorize.requestMatchers(WHITE_LIST_URI).permitAll()
                 )
                 .authorizeHttpRequests((authorize) ->
                         authorize.anyRequest().hasAuthority("ROLE_USER")
