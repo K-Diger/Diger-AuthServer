@@ -13,8 +13,8 @@ public class JwtAgentImpl implements JwtAgent {
     private final JwtParser jwtParser;
 
     @Override
-    public JwtPair provide(String loginId) {
-        return jwtGenerator.execute(1L);
+    public JwtPair provide(Long userId, String loginId) {
+        return jwtGenerator.execute(userId, loginId);
     }
 
     @Override

@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -28,14 +29,12 @@ public class AuthorizationFilter extends OncePerRequestFilter {
     private final UserRepository userRepository;
     private final JwtAgent jwtAgent;
     private final UserDetailsService userDetailsService;
-    private final String[] permitURLs;
 
     private static final String HEADER_CONST = "Authorization";
     private static final int BEARER_PREFIX = 7;
     private static final String SECURITY_CONTEXT_ROLE_PREFIX = "ROLE_";
-    private static final SimpleGrantedAuthority targetAuthority = new SimpleGrantedAuthority(
-            SECURITY_CONTEXT_ROLE_PREFIX + Role.NOT_AUTH
-    );
+    private static final SimpleGrantedAuthority targetAuthority =
+            new SimpleGrantedAuthority(SECURITY_CONTEXT_ROLE_PREFIX + Role.NOT_AUTH);
 
     @Override
     protected void doFilterInternal(
@@ -48,7 +47,7 @@ public class AuthorizationFilter extends OncePerRequestFilter {
             UserVo userVo = loadUserEntityByRequest(request).toVo();
             Authentication authentication = getAuthentication(userVo.getLoginId());
             validateAuthenticationBySecurityHolder(authentication);
-
+            SecurityContextHolder.getContext().setAuthentication(authentication);
             filterChain.doFilter(request, response);
         }
     }
@@ -79,8 +78,9 @@ public class AuthorizationFilter extends OncePerRequestFilter {
     }
 
     private Boolean isByPassURI(String URI) {
-        for (String permitURL : permitURLs) {
-            if (permitURL.equals(URI)) {
+        String[] byPassURI = {"/v1/join", "/v1/login"};
+        for (String uri : byPassURI) {
+            if (uri.equals(URI)) {
                 return true;
             }
         }

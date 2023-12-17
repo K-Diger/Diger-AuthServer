@@ -15,15 +15,15 @@ public class JwtGenerator {
     private static final Long ACCESS_TOKEN_EXPIRE_TIME = 30 * 60 * 1000L;
     private static final Long REFRESH_TOKEN_EXPIRE_TIME = 270 * 24 * 60 * 60 * 1000L;
 
-    public JwtPair execute(Long userId) {
-        return new JwtPair(buildAccessToken(userId), buildRefreshToken());
+    public JwtPair execute(Long userId, String loginId) {
+        return new JwtPair(buildAccessToken(userId, loginId), buildRefreshToken());
     }
 
-    private String buildAccessToken(Long userId) {
+    private String buildAccessToken(Long userId, String loginId) {
         return Jwts.builder()
                 .signWith(jwtProperties.getSigningKey())
                 .setHeaderParam("type", "JWT")
-                .setClaims(buildClaims(userId))
+                .setClaims(buildClaims(userId, loginId))
                 .setExpiration(buildExpiredAt(ACCESS_TOKEN_EXPIRE_TIME))
                 .compact();
     }
@@ -36,10 +36,11 @@ public class JwtGenerator {
                 .compact();
     }
 
-    private Claims buildClaims(Long userId) {
+    private Claims buildClaims(Long userId, String loginId) {
         Claims claims = Jwts.claims();
         claims.setSubject("jwt");
         claims.put("id", userId);
+        claims.put("loginId", loginId);
         return claims;
     }
 

@@ -4,7 +4,7 @@ import com.smilegate.digeruserservice.common.jwt.component.JwtPair;
 
 public interface JwtAgent {
 
-    JwtPair provide(String loginId);
+    JwtPair provide(Long userId, String loginId);
 
     void verify(String jwt);
 

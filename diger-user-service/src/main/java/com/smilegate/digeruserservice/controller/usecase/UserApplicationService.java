@@ -40,9 +40,9 @@ public class UserApplicationService {
             String loginId,
             String password
     ) {
-        userService.loadByLoginIdAndPassword(loginId, password);
+        UserVo userVo = userService.loadByLoginIdAndPassword(loginId, password);
         return new UserTokenResponse(
-                jwtAgent.provide(loginId)
+                jwtAgent.provide(userVo.getId(), userVo.getLoginId())
         );
     }
 
