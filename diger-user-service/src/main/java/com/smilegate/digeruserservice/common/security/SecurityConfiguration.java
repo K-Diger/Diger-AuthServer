@@ -3,7 +3,6 @@ package com.smilegate.digeruserservice.common.security;
 import com.smilegate.digeruserservice.common.security.filter.JwtSuperAgent;
 import com.smilegate.digeruserservice.common.security.filter.authentication.AuthenticationFilter;
 import com.smilegate.digeruserservice.common.security.filter.authorization.AuthorizationFilter;
-import com.smilegate.digeruserservice.domain.persistence.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +21,6 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfiguration {
 
     private final UserDetailsService userDetailsService;
-    private final UserRepository userRepository;
     private final JwtSuperAgent jwtSuperAgent;
 
     private static final String[] NOT_NEED_AUTHORIZED = {
