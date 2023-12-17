@@ -13,7 +13,7 @@ import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
-public class JwtSuperAgentImpl {
+public class JwtSuperAgentImpl implements JwtSuperAgent {
 
     private final JwtAgent jwtAgent;
     private final UserRepository userRepository;
@@ -21,6 +21,7 @@ public class JwtSuperAgentImpl {
     private static final String HEADER_CONST = "Authorization";
     private static final int BEARER_PREFIX = 7;
 
+    @Override
     public UserEntity loadUserEntityByRequest(HttpServletRequest httpServletRequest) {
         String accessToken = httpServletRequest.getHeader(HEADER_CONST).substring(BEARER_PREFIX);
         Long userId = jwtAgent.parseUserId(accessToken);
