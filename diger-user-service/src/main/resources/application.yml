@@ -17,9 +17,6 @@ spring:
         show_sql: true
         format_sql: true
 
-jwt:
-  secret-key: smilegatedigermsaauthserversmilegatedigermsaauthserversmilegatedigermsaauthserver
-
 eureka:
   instance:
     hostname: localhost

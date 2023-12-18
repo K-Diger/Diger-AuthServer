@@ -5,7 +5,7 @@ import com.smilegate.digerauthserver.common.jwt.component.JwtPair;
 import com.smilegate.digerauthserver.controller.dto.request.JoinRequest;
 import com.smilegate.digerauthserver.controller.dto.request.LoginRequest;
 import com.smilegate.digerauthserver.controller.dto.response.UserResponse;
-import com.smilegate.digerauthserver.controller.feignclient.UserFeignClient;
+import com.smilegate.digerauthserver.feign.UserFeignClient;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

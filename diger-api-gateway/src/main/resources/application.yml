@@ -41,9 +41,6 @@ spring:
           filters:
             - RewritePath=/post-service/?(?<segment>.*), /$\{segment}
 
-jwt:
-  secret-key: smilegatedigermsaauthserversmilegatedigermsaauthserversmilegatedigermsaauthserver
-
 eureka:
   instance:
     hostname: localhost
