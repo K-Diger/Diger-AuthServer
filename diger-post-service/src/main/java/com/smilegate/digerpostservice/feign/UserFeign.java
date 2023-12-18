@@ -14,10 +14,4 @@ public interface UserFeign {
             @RequestHeader("Authorization") String token,
             @PathVariable Long userId
     );
-
-    @GetMapping("/v1/{loginId}")
-    UserResponse loadUserInfoByLoginId(
-            @RequestHeader("Authorization") String token,
-            @PathVariable String loginId
-    );
 }
