@@ -1,5 +1,6 @@
 package com.smilegate.digerpostservice.domain.persistence;
 
+import com.smilegate.digerpostservice.domain.PostVo;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -12,6 +13,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 public class PostEntity extends BaseEntity {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @Column(name = "title", length = 50, nullable = false)
     private String title;
 
@@ -19,5 +25,10 @@ public class PostEntity extends BaseEntity {
     private String content;
 
     @Enumerated(value = EnumType.STRING)
+    @Column(name = "type")
     private PostType postType;
+
+    public PostVo toVo() {
+        return new PostVo(id, title, content, postType);
+    }
 }

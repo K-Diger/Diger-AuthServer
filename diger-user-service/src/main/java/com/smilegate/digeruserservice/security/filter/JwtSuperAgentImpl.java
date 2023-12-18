@@ -4,6 +4,7 @@ import com.smilegate.digeruserservice.common.exception.ExceptionType;
 import com.smilegate.digeruserservice.common.exception.UserServerException;
 import com.smilegate.digeruserservice.domain.persistence.UserEntity;
 import com.smilegate.digeruserservice.domain.persistence.UserRepository;
+import com.smilegate.digeruserservice.feign.JwtAuthFeign;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

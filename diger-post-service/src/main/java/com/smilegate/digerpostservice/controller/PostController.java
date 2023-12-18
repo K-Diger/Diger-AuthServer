@@ -1,18 +1,45 @@
 package com.smilegate.digerpostservice.controller;
 
+import com.smilegate.digerpostservice.controller.dto.request.PostCreateRequest;
+import com.smilegate.digerpostservice.controller.dto.response.PostResponse;
+import com.smilegate.digerpostservice.controller.usecase.PostApplicationService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/v1/post")
+@RequestMapping("/v1")
 @RequiredArgsConstructor
 public class PostController {
 
+    private final PostApplicationService postApplicationService;
+
+    @ResponseStatus(HttpStatus.OK)
     @PostMapping
-    public String test() {
-        return "test post Service";
+    public ResponseEntity<PostResponse> create(
+            @RequestBody PostCreateRequest postCreateRequest
+    ) {
+
+        return ResponseEntity.ok().body(
+                postApplicationService.createPost(
+                        postCreateRequest.title(),
+                        postCreateRequest.content()
+                )
+        );
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping("/notice")
+    public ResponseEntity<PostResponse> createNotice(
+            @RequestBody PostCreateRequest postCreateRequest
+    ) {
+
+        return ResponseEntity.ok().body(
+                postApplicationService.createNotice(
+                        postCreateRequest.title(),
+                        postCreateRequest.content()
+                )
+        );
     }
 }

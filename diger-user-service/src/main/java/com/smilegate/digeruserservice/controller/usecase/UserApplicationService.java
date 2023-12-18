@@ -56,4 +56,14 @@ public class UserApplicationService {
         );
     }
 
+    public UserResponse retrieveByLoginId(String loginId) {
+        UserVo userVo = userService.loadByLoginId(loginId);
+        return new UserResponse(
+                userVo.getId(),
+                userVo.getLoginId(),
+                userVo.getNickname(),
+                userVo.getRole().name()
+        );
+    }
+
 }

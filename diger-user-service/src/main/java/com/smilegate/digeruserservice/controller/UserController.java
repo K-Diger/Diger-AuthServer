@@ -7,6 +7,7 @@ import com.smilegate.digeruserservice.controller.usecase.UserApplicationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -16,12 +17,21 @@ public class UserController {
 
     private final UserApplicationService userApplicationService;
 
-    @GetMapping("{userId}")
+    @GetMapping("/{userId}")
     public ResponseEntity<UserResponse> loadInfo(
             @PathVariable Long userId
     ) {
         return ResponseEntity.ok().body(
                 userApplicationService.retrieve(userId)
+        );
+    }
+
+    @GetMapping("/")
+    public ResponseEntity<UserResponse> loadMyInfo() {
+        return ResponseEntity.ok().body(
+                userApplicationService.retrieveByLoginId(
+                        String.valueOf(SecurityContextHolder.getContext().getAuthentication().getPrincipal())
+                )
         );
     }
 

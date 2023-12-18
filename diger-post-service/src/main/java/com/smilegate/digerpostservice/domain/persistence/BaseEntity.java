@@ -1,6 +1,7 @@
 package com.smilegate.digerpostservice.domain.persistence;
 
-import jakarta.persistence.*;
+import jakarta.persistence.EntityListeners;
+import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -12,10 +13,6 @@ import java.time.LocalDateTime;
 @Getter
 @MappedSuperclass
 public abstract class BaseEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     private LocalDateTime deletedAt;
 

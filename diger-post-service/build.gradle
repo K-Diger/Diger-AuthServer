@@ -26,13 +26,35 @@ ext {
 }
 
 dependencies {
+    // OpenFeign
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:4.0.3'
+
+    // Validation Annotation
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+    // Spring Security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    // Tomcat
     implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // JPA
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    // Eureka Client
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
+
+    // Lombok
     compileOnly 'org.projectlombok:lombok'
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-    runtimeOnly 'com.mysql:mysql-connector-j'
     annotationProcessor 'org.projectlombok:lombok'
+
+    // DevTools
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+
+    // Mysql Driver
+    runtimeOnly 'com.mysql:mysql-connector-j'
+
+    // Test Basement
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 

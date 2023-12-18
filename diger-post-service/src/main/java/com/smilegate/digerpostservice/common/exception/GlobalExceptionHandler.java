@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
-import static com.smilegate.digeruserservice.common.exception.ExceptionType.E400;
+import static com.smilegate.digerpostservice.common.exception.ExceptionType.E400;
 import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 @Slf4j
@@ -38,8 +38,8 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(exceptionResponse, exception.getStatus());
     }
 
-    @ExceptionHandler(value = {UserServerException.class})
-    public ResponseEntity<ExceptionResponse> handleBaseException(UserServerException e) {
+    @ExceptionHandler(value = {PostServerException.class})
+    public ResponseEntity<ExceptionResponse> handleBaseException(PostServerException e) {
         String className = e.getClass().getName();
         ExceptionType exceptionType = e.getExceptionType();
         ExceptionResponse exceptionResponse = ExceptionResponse.builder()

@@ -1,8 +1,7 @@
-package com.smilegate.digeruserservice.security;
+package com.smilegate.digerpostservice.security;
 
-import com.smilegate.digeruserservice.security.filter.JwtSuperAgent;
-import com.smilegate.digeruserservice.security.filter.authentication.AuthenticationFilter;
-import com.smilegate.digeruserservice.security.filter.authorization.AuthorizationFilter;
+import com.smilegate.digerpostservice.security.filter.JwtFilter;
+import com.smilegate.digerpostservice.security.filter.JwtSuperAgent;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,7 +9,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
@@ -20,13 +18,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @RequiredArgsConstructor
 public class SecurityConfiguration {
 
-    private final UserDetailsService userDetailsService;
     private final JwtSuperAgent jwtSuperAgent;
-
-    private static final String[] WHITE_LIST_URI = {
-            "/v1/join",
-            "/v1/login",
-    };
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -41,27 +33,13 @@ public class SecurityConfiguration {
 
         http
                 .authorizeHttpRequests((authorize) ->
-                        authorize.requestMatchers(WHITE_LIST_URI).permitAll()
+                        authorize.anyRequest().authenticated()
                 )
-                .authorizeHttpRequests((authorize) ->
-                        authorize.anyRequest().hasAuthority("ROLE_USER")
-                )
-                // 요청 내 토큰이 있는지 검증
                 .addFilterBefore(
-                        new AuthenticationFilter(
-                                userDetailsService,
-                                jwtSuperAgent
-                        ),
+                        new JwtFilter(jwtSuperAgent),
                         UsernamePasswordAuthenticationFilter.class
-                )
-                // 토큰을 통해 조회한 ROLE이 적합한가?
-                .addFilterAfter(
-                        new AuthorizationFilter(
-                                jwtSuperAgent,
-                                userDetailsService
-                        ),
-                        AuthenticationFilter.class
                 );
+
         return http.build();
     }
 }
