@@ -11,6 +11,12 @@ spring:
     web-application-type: reactive
   cloud:
     gateway:
+      default-filters:
+        - name: AuthenticationFilter
+          args:
+            baseMessage: Spring Cloud Gateway Global Filter
+            preLogger: true
+            postLogger: true
       routes:
         - id: USER-SERVICE
           uri: lb://USER-SERVICE
@@ -18,7 +24,6 @@ spring:
             - Path=/user-service/**
           filters:
             - RewritePath=/user-service/?(?<segment>.*), /$\{segment}
-            - AuthenticationFilter
 
         - id: POST-SERVICE
           uri: lb://POST-SERVICE
@@ -27,6 +32,7 @@ spring:
           filters:
             - RewritePath=/post-service/?(?<segment>.*), /$\{segment}
             - AuthenticationFilter
+
 eureka:
   instance:
     hostname: localhost
