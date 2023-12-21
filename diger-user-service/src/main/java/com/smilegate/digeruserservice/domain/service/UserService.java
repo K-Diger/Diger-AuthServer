@@ -8,7 +8,6 @@ import com.smilegate.digeruserservice.domain.persistence.Role;
 import com.smilegate.digeruserservice.domain.persistence.UserEntity;
 import com.smilegate.digeruserservice.domain.persistence.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,14 +20,14 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncryptor passwordEncryptor;
-    private final BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public UserVo create(String loginId, String password, String nickname) {
         return userRepository.save(
                 new UserVo(
                         loginId,
-                        bCryptPasswordEncoder.encode(password),
+                        passwordEncryptor.onlyHash(password),
                         nickname,
+                        0,
                         Role.USER
                 ).fromVo()
         ).toVo();
@@ -38,6 +37,14 @@ public class UserService {
         Optional<UserEntity> userEntity = userRepository.findById(id);
         if (userEntity.isEmpty()) throw new UserServerException(ExceptionType.E404);
         return userEntity.get().toVo();
+    }
+
+    public UserVo loadByLoginId(String loginId) {
+        Optional<UserEntity> userEntity = userRepository.findByLoginId(loginId);
+        if (userEntity.isPresent()) {
+            return userEntity.get().toVo();
+        }
+        throw new UserServerException(ExceptionType.E404);
     }
 
     public UserVo loadByLoginIdAndPassword(
@@ -51,8 +58,15 @@ public class UserService {
         return userEntity.get().toVo();
     }
 
+    public UserVo updatePoint(
+            UserVo userVo,
+            Integer point
+    ) {
+        return userVo.fromVo().updatePoint(point).toVo();
+    }
+
     public boolean incorrectPassword(String password, UserVo userVo) {
-        return !bCryptPasswordEncoder.matches(
+        return !passwordEncryptor.matches(
                 password,
                 userVo.getPassword()
         );
@@ -68,13 +82,5 @@ public class UserService {
         if (userRepository.findByNickname(nickname).isPresent()) {
             throw new UserServerException(ExceptionType.E409);
         }
-    }
-
-    public UserVo loadByLoginId(String loginId) {
-        Optional<UserEntity> userEntity = userRepository.findByLoginId(loginId);
-        if (userEntity.isPresent()) {
-            return userEntity.get().toVo();
-        }
-        throw new UserServerException(ExceptionType.E404);
     }
 }

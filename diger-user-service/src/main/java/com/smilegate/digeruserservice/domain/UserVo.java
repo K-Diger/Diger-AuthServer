@@ -21,12 +21,14 @@ public class UserVo implements UserDetails {
     private String loginId;
     private String password;
     private String nickname;
+    private Integer point;
     private Role role;
 
-    public UserVo(String loginId, String password, String nickname, Role role) {
+    public UserVo(String loginId, String password, String nickname, Integer point, Role role) {
         this.loginId = loginId;
         this.password = password;
         this.nickname = nickname;
+        this.point = point;
         this.role = role;
     }
 
@@ -36,6 +38,7 @@ public class UserVo implements UserDetails {
                 loginId,
                 password,
                 nickname,
+                point,
                 role
         );
     }

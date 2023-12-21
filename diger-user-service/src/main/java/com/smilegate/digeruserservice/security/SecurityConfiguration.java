@@ -1,6 +1,6 @@
 package com.smilegate.digeruserservice.security;
 
-import com.smilegate.digeruserservice.security.filter.JwtSuperAgent;
+import com.smilegate.digeruserservice.common.jwt.JwtAgent;
 import com.smilegate.digeruserservice.security.filter.authentication.AuthenticationFilter;
 import com.smilegate.digeruserservice.security.filter.authorization.AuthorizationFilter;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 public class SecurityConfiguration {
 
     private final UserDetailsService userDetailsService;
-    private final JwtSuperAgent jwtSuperAgent;
+    private final JwtAgent jwtAgent;
 
     private static final String[] WHITE_LIST_URI = {
             "/v1/join",
@@ -46,19 +46,17 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests((authorize) ->
                         authorize.anyRequest().hasAuthority("ROLE_USER")
                 )
-                // 요청 내 토큰이 있는지 검증
                 .addFilterBefore(
                         new AuthenticationFilter(
                                 userDetailsService,
-                                jwtSuperAgent
+                                jwtAgent
                         ),
                         UsernamePasswordAuthenticationFilter.class
                 )
-                // 토큰을 통해 조회한 ROLE이 적합한가?
                 .addFilterAfter(
                         new AuthorizationFilter(
-                                jwtSuperAgent,
-                                userDetailsService
+                                userDetailsService,
+                                jwtAgent
                         ),
                         AuthenticationFilter.class
                 );

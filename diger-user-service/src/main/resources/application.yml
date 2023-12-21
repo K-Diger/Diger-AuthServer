@@ -1,6 +1,9 @@
 server:
   port: 8081
 
+jwt:
+  secret-key: smilegatedigermsaauthserversmilegatedigermsaauthserversmilegatedigermsaauthserver
+
 spring:
   application:
     name: user-service

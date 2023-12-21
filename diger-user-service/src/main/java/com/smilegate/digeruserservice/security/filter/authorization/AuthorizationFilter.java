@@ -2,8 +2,7 @@ package com.smilegate.digeruserservice.security.filter.authorization;
 
 import com.smilegate.digeruserservice.common.exception.ExceptionType;
 import com.smilegate.digeruserservice.common.exception.UserServerException;
-import com.smilegate.digeruserservice.security.filter.JwtSuperAgent;
-import com.smilegate.digeruserservice.domain.UserVo;
+import com.smilegate.digeruserservice.common.jwt.JwtAgent;
 import com.smilegate.digeruserservice.domain.persistence.Role;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -23,8 +22,8 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class AuthorizationFilter extends OncePerRequestFilter {
 
-    private final JwtSuperAgent jwtSuperAgent;
     private final UserDetailsService userDetailsService;
+    private final JwtAgent jwtAgent;
 
     private static final String SECURITY_CONTEXT_ROLE_PREFIX = "ROLE_";
     private static final SimpleGrantedAuthority targetAuthority =
@@ -38,8 +37,8 @@ public class AuthorizationFilter extends OncePerRequestFilter {
     ) throws ServletException, IOException {
         if (isByPassURI(request.getRequestURI())) filterChain.doFilter(request, response);
         else {
-            UserVo userVo = jwtSuperAgent.loadUserEntityByRequest(request).toVo();
-            Authentication authentication = getAuthentication(userVo.getLoginId());
+            String loginId = jwtAgent.parseUserLoginId(request.getHeader("Authorization"));
+            Authentication authentication = getAuthentication(loginId);
             validateAuthenticationBySecurityHolder(authentication);
             SecurityContextHolder.getContext().setAuthentication(authentication);
             filterChain.doFilter(request, response);

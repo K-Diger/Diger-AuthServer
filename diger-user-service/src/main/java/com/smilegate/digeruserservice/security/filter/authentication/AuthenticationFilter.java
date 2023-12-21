@@ -1,7 +1,6 @@
 package com.smilegate.digeruserservice.security.filter.authentication;
 
-import com.smilegate.digeruserservice.security.filter.JwtSuperAgent;
-import com.smilegate.digeruserservice.domain.UserVo;
+import com.smilegate.digeruserservice.common.jwt.JwtAgent;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +15,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
 
     private final UserDetailsService userDetailsService;
-    private final JwtSuperAgent jwtSuperAgent;
+    private final JwtAgent jwtAgent;
 
     @Override
     public Authentication attemptAuthentication(
@@ -25,10 +24,9 @@ public class AuthenticationFilter extends UsernamePasswordAuthenticationFilter {
     ) throws AuthenticationException {
         if (isByPassURI(request.getRequestURI())) return null;
 
-        UserVo userVo = jwtSuperAgent.loadUserEntityByRequest(request).toVo();
-        String loginId = userVo.getLoginId();
-        UserDetails userDetails = userDetailsService.loadUserByUsername(loginId);
-        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = createToken(userDetails);
+        String loginId = jwtAgent.parseUserLoginId(request.getHeader("Authorization"));
+        UserDetails userVo = userDetailsService.loadUserByUsername(loginId);
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = createToken(userVo);
         return getAuthenticationManager().authenticate(usernamePasswordAuthenticationToken);
     }
 

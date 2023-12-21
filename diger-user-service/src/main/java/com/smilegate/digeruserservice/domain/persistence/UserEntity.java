@@ -26,11 +26,19 @@ public class UserEntity extends BaseEntity {
     @Column(name = "nickname", length = 20, nullable = false)
     private String nickname;
 
+    @Column(name = "point", nullable = false)
+    private Integer point;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
     public UserVo toVo() {
-        return new UserVo(id, loginId, password, nickname, role);
+        return new UserVo(id, loginId, password, nickname, point, role);
+    }
+
+    public UserEntity updatePoint(Integer point) {
+        this.point += point;
+        return this;
     }
 }
 
