@@ -19,6 +19,7 @@ public class PostServiceImpl implements PostService {
 
     private final PostRepository postRepository;
 
+    @Transactional
     @Override
     public PostVo create(String title, String content, PostType postType) {
         PostEntity postEntity = new PostVo(
@@ -37,6 +38,7 @@ public class PostServiceImpl implements PostService {
         return postEntity.get().toVo();
     }
 
+    @Transactional
     @Override
     public PostVo update(String title, String content) {
         return null;

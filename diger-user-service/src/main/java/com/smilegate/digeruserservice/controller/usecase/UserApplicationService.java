@@ -5,6 +5,7 @@ import com.smilegate.digeruserservice.common.jwt.component.JwtPair;
 import com.smilegate.digeruserservice.controller.dto.response.UserResponse;
 import com.smilegate.digeruserservice.domain.UserVo;
 import com.smilegate.digeruserservice.domain.service.UserService;
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +17,7 @@ public class UserApplicationService {
 
     private final UserService userService;
     private final JwtAgent jwtAgent;
+    private final EntityManager entityManager;
 
     @Transactional
     public UserResponse create(
@@ -67,12 +69,12 @@ public class UserApplicationService {
         );
     }
 
+    @Transactional
     public UserResponse updateUserPoint(
             Long targetUserId,
             Integer point
     ) {
-        UserVo userVo = userService.loadById(targetUserId);
-        UserVo updatedUserVo = userService.updatePoint(userVo, point);
+        UserVo updatedUserVo = userService.updatePoint(targetUserId, point);
         return new UserResponse(
                 updatedUserVo.getId(),
                 updatedUserVo.getLoginId(),

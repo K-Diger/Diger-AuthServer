@@ -1,6 +1,9 @@
 server:
   port: 8082
 
+jwt:
+  secret-key: smilegatedigermsaauthserversmilegatedigermsaauthserversmilegatedigermsaauthserver
+
 spring:
   application:
     name: post-service

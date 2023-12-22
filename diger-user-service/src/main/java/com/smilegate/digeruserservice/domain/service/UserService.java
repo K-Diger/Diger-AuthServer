@@ -58,11 +58,16 @@ public class UserService {
         return userEntity.get().toVo();
     }
 
+    @Transactional
     public UserVo updatePoint(
-            UserVo userVo,
+            Long id,
             Integer point
     ) {
-        return userVo.fromVo().updatePoint(point).toVo();
+        Optional<UserEntity> userEntity = userRepository.findById(id);
+        if (userEntity.isPresent()) {
+            return userEntity.get().updatePoint(point).toVo();
+        }
+        throw new UserServerException(ExceptionType.E404);
     }
 
     public boolean incorrectPassword(String password, UserVo userVo) {

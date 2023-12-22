@@ -51,11 +51,11 @@ public class AuthenticationFilter extends AbstractGatewayFilterFactory<Authentic
     }
 
     private boolean isWhiteListPostServiceURI(ServerHttpRequest requestUri) {
-        return requestUri.getURI().getPath().equals("/v1/all");
+        return requestUri.getURI().getPath().equals("/post-service/v1/all");
     }
 
     private boolean isWhiteListUserServiceURI(ServerHttpRequest requestUri) {
-        return requestUri.getURI().getPath().equals("/v1/join") || requestUri.getURI().getPath().equals("/v1/login");
+        return requestUri.getURI().getPath().equals("/user-service/v1/join") || requestUri.getURI().getPath().equals("/user-service/v1/login");
     }
 
     private void validateAuthorizationHeader(ServerHttpRequest request) {

@@ -57,9 +57,6 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
-    // DevTools
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-
     // Mysql Driver
     runtimeOnly 'com.mysql:mysql-connector-j'
 

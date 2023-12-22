@@ -6,12 +6,14 @@ import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.DynamicUpdate;
 
 @Getter
 @Entity
 @Table(name = "user")
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
+@DynamicUpdate
 public class UserEntity extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +35,14 @@ public class UserEntity extends BaseEntity {
     private Role role;
 
     public UserVo toVo() {
-        return new UserVo(id, loginId, password, nickname, point, role);
+        return new UserVo(
+                this.id,
+                this.loginId,
+                this.password,
+                this.nickname,
+                this.point,
+                this.role
+        );
     }
 
     public UserEntity updatePoint(Integer point) {

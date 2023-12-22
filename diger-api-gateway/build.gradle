@@ -49,9 +49,6 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
-    // DevTools
-    developmentOnly 'org.springframework.boot:spring-boot-devtools'
-
     // Test Basement
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
