@@ -27,8 +27,8 @@ ext {
 
 dependencies {
 
-    // CircuitBreaker
-    implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-reactor-resilience4j'
+    // Config
+    implementation 'org.springframework.cloud:spring-cloud-starter-config'
 
     // Gateway
     implementation 'org.springframework.boot:spring-boot-starter-web'

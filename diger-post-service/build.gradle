@@ -27,6 +27,9 @@ ext {
 
 dependencies {
 
+    // Config
+    implementation 'org.springframework.cloud:spring-cloud-starter-config'
+
     // JWT
     implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
     implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
@@ -34,6 +37,11 @@ dependencies {
 
     // OpenFeign
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:4.0.3'
+
+    // Circuit Breaker
+    implementation 'org.springframework.boot:spring-boot-starter-actuator:3.1.0'
+    implementation 'org.springframework.cloud:spring-cloud-starter-circuitbreaker-resilience4j:3.0.0'
+    implementation 'org.springframework.boot:spring-boot-starter-aop:3.0.4'
 
     // Validation Annotation
     implementation 'org.springframework.boot:spring-boot-starter-validation'

@@ -1,6 +1,9 @@
 server:
   port: 8888
 
+encrypt:
+  key: testconfigencryptorkeytestconfigencryptorkeytestconfigencryptorkey
+
 spring:
   application:
     name: config-service
@@ -9,3 +12,4 @@ spring:
       server:
         git:
           uri: https://github.com/K-Diger/SpringCloud-Config
+          default-label: main

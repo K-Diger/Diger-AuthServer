@@ -4,12 +4,24 @@
 
 ---
 
-### 남은 할일 - 23/12/22
+### 서버 가동 순서
 
-1. PostServer -> UserServer OpenFeign 적용
-2. Spring Cloud Config 적용 안되는 부분 점검
-3. Spring Cloud Valut를 통해 Config 암호화
-4. CircuitBreaker 적용
+- Eureka -> Config -> MicroServer ... -> API Gateway
+
+### 고민해야할 내용
+
+- API Gateway는 왜 Config 서버의 내용을 읽지 못하는 걸까?
+- 마이크로 서버의 Spring Security에서 발생한 에러를 사용자에게 보여주는 메세지가 나타나지 않는 현상도 해결해야한다.
+- 또한 PostService -> UserService 호출 시 UserService에서 발생하는 에러를 캐치하여 사용자에게 보여줄 수 있는 수단이 필요하다. 
+
+- Feign의 예외처리
+
+- Circuit Breaker가 왜 필요한가?
+
+- 서비스 디스커버리가 왜 필요한가? API Gateway를 통해서 전부 관리가 될 것 같은데.
+  - 운영중인 마이크로 서버의 IP가 변경된 상황에서 Service Discovery가 없다면 해당 게이트웨이에서도 변경된 마이크로 서버의 IP를 반영해줘야한다.
+  - 하지만 Service Discovery를 사용하면 이 변경사항도 관리를 해주고 별칭으로 로드밸런싱이 가능하게 되는 관리적인 이점이 있다.
+
 
 ---
 

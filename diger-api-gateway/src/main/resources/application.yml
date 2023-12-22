@@ -5,11 +5,10 @@ jwt:
   secret-key: smilegatedigermsaauthserversmilegatedigermsaauthserversmilegatedigermsaauthserver
 
 spring:
-  application:
-    name: api-gateway
-  main:
-    web-application-type: reactive
   cloud:
+    config:
+      name: api-gateway
+      profile: dev
     gateway:
       default-filters:
         - name: AuthenticationFilter
@@ -33,6 +32,12 @@ spring:
             - RewritePath=/post-service/?(?<segment>.*), /$\{segment}
             - AuthenticationFilter
 
+  application:
+    name: api-gateway
+
+  main:
+    web-application-type: reactive
+
 eureka:
   instance:
     hostname: localhost
@@ -41,3 +46,9 @@ eureka:
     register-with-eureka: true
     service-url:
       defaultZone: http://localhost:8761/eureka
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: refresh
