@@ -17,6 +17,7 @@
 - Feign의 예외처리
 
 - Circuit Breaker가 왜 필요한가?
+  - https://oliveyoung.tech/blog/2023-08-31/circuitbreaker-inventory-squad/
 
 - 서비스 디스커버리가 왜 필요한가? API Gateway를 통해서 전부 관리가 될 것 같은데.
   - 운영중인 마이크로 서버의 IP가 변경된 상황에서 Service Discovery가 없다면 해당 게이트웨이에서도 변경된 마이크로 서버의 IP를 반영해줘야한다.
