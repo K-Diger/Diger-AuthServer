@@ -37,27 +37,26 @@ public class AuthorizationFilter extends OncePerRequestFilter {
     ) throws ServletException, IOException {
         if (isByPassURI(request.getRequestURI())) filterChain.doFilter(request, response);
         else {
+
             String loginId = jwtAgent.parseUserLoginId(request.getHeader("Authorization"));
-            Authentication authentication = getAuthentication(loginId);
-            validateAuthenticationBySecurityHolder(authentication);
-            SecurityContextHolder.getContext().setAuthentication(authentication);
+            UserDetails userVo = userDetailsService.loadUserByUsername(loginId);
+            UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = createAuthenticationToken(userVo);
+            SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
             filterChain.doFilter(request, response);
         }
     }
 
-    private void validateAuthenticationBySecurityHolder(Authentication authentication) {
-        if (authentication.getAuthorities().contains(targetAuthority)) {
+    private UsernamePasswordAuthenticationToken createAuthenticationToken(UserDetails userDetails) {
+        UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+                userDetails.getUsername(),
+                userDetails.getPassword(),
+                userDetails.getAuthorities()
+        );
+
+        if (usernamePasswordAuthenticationToken.getAuthorities().contains(targetAuthority)) {
             throw new UserServerException(ExceptionType.E401);
         }
-    }
-
-    private Authentication getAuthentication(String loginId) {
-        final UserDetails user = userDetailsService.loadUserByUsername(loginId);
-        return new UsernamePasswordAuthenticationToken(
-                user.getUsername(),
-                user.getPassword(),
-                user.getAuthorities()
-        );
+        return usernamePasswordAuthenticationToken;
     }
 
     private Boolean isByPassURI(String URI) {

@@ -1,7 +1,7 @@
 package com.smilegate.digerpostservice.security;
 
 import com.smilegate.digerpostservice.common.jwt.JwtAgentWithFeign;
-import com.smilegate.digerpostservice.security.filter.JwtFilter;
+import com.smilegate.digerpostservice.security.filter.AuthorizationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -36,7 +36,7 @@ public class SecurityConfiguration {
                         authorize.anyRequest().authenticated()
                 )
                 .addFilterBefore(
-                        new JwtFilter(jwtAgent),
+                        new AuthorizationFilter(jwtAgent),
                         UsernamePasswordAuthenticationFilter.class
                 );
 

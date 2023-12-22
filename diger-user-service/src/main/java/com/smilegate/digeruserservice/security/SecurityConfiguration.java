@@ -1,7 +1,6 @@
 package com.smilegate.digeruserservice.security;
 
 import com.smilegate.digeruserservice.common.jwt.JwtAgent;
-import com.smilegate.digeruserservice.security.filter.authentication.AuthenticationFilter;
 import com.smilegate.digeruserservice.security.filter.authorization.AuthorizationFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -46,19 +45,12 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests((authorize) ->
                         authorize.anyRequest().hasAuthority("ROLE_USER")
                 )
-                .addFilterBefore(
-                        new AuthenticationFilter(
-                                userDetailsService,
-                                jwtAgent
-                        ),
-                        UsernamePasswordAuthenticationFilter.class
-                )
                 .addFilterAfter(
                         new AuthorizationFilter(
                                 userDetailsService,
                                 jwtAgent
                         ),
-                        AuthenticationFilter.class
+                        UsernamePasswordAuthenticationFilter.class
                 );
         return http.build();
     }
