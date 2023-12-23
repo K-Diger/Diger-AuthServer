@@ -57,7 +57,7 @@
 
 - [ ] 마이크로서버와 통신방식을 `마일스톤 1`의 `OpenFeign`에서 `gRPC`로 변경한다.
 
-- [ ] `Circuit Breaker`를 통해 `fault-tolerance(장애허용)`를 확보한다.
+- [x] `Circuit Breaker`를 통해 `fault-tolerance(장애허용)`를 확보한다.
 
 ---
 
